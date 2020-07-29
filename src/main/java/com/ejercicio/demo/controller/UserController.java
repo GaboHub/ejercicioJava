@@ -5,9 +5,11 @@ import com.ejercicio.demo.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -23,12 +25,12 @@ public class UserController {
         return ResponseEntity.ok("Running...");
     }
 
-//    @GetMapping(value = "/user")
-//    public ResponseEntity<User> getUser(@RequestParam String username) {
-//        return userRepository.findByFirstName(username).stream().findFirst()
-//                .map(user -> ResponseEntity.ok().body(user))
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
+    @GetMapping(value = "/user")
+    public ResponseEntity<User> getUser(@RequestParam String username) {
+        return userBusiness.findByFirstName(username).stream().findFirst()
+                .map(user -> ResponseEntity.ok().body(user))
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @PostMapping(value = "/user")
     public ResponseEntity<Optional<User>> saveUser(@RequestBody User user) {
