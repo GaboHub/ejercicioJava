@@ -24,16 +24,18 @@ public class UserBusiness {
 
     public User saveNewUser(User user) throws UserRegisteredException {
 
+
         userRepository.findUserByEmail(user.getEmail()).ifPresent(a -> { throw new UserRegisteredException("El correo ya registrado: " + a.getEmail()); } );
 
 
         emailValidation.validate(user.getEmail());
         passwordValidation.validate(user.getPassword());
 
+        LocalDateTime created = LocalDateTime.now();
         User newUser = User.builder()
                 .id(UUID.randomUUID())
-                .created(LocalDateTime.now())
-                .lastLogin(LocalDateTime.now())
+                .created(created)
+                .lastLogin(created)
                 .token(UUID.randomUUID().toString())
                 .active(true)
                 .email(user.getEmail())
