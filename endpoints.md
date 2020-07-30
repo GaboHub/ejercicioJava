@@ -106,3 +106,7 @@
     "message": "detailed error"
 }
 `````
+
+Unsoported media type
+- Status: `415`
+

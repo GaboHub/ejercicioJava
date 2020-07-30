@@ -25,14 +25,14 @@ public class UserController {
         return ResponseEntity.ok("Running...");
     }
 
-    @GetMapping(value = "/user")
+    @GetMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<User> getUser(@RequestParam String username) {
         return userBusiness.findByFirstName(username).stream().findFirst()
                 .map(user -> ResponseEntity.ok().body(user))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<Optional<User>> saveUser(@RequestBody User user) {
         Optional<User> createdUser = Optional.of(userBusiness.saveNewUser(user));
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
